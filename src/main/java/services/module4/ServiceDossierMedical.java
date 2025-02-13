@@ -17,7 +17,7 @@ import java.util.List;
 public class ServiceDossierMedical extends BaseService implements IService<DossierMedical> {
     @Override
     public void add(DossierMedical dossierMedical) throws SQLException {
-        String sql = "INSERT INTO dossiermedical(joueur_id, allergies, historique_blessures, dernier_checkup) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO dossiermedical(joueur_id, allergies, historiqueblessures, derniercheckup) VALUES(?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, dossierMedical.getJoueur().getId());
             ps.setString(2, dossierMedical.getAllergies());
@@ -33,7 +33,7 @@ public class ServiceDossierMedical extends BaseService implements IService<Dossi
 
     @Override
     public void update(DossierMedical dossierMedical) {
-        String sql = "UPDATE dossiermedical SET joueur_id = ?, allergies = ?, historique_blessures = ?, dernier_checkup = ? WHERE id = ?";
+        String sql = "UPDATE dossiermedical SET joueur_id = ?, allergies = ?, historiqueblessures = ?, derniercheckup = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, dossierMedical.getJoueur().getId());
             ps.setString(2, dossierMedical.getAllergies());
@@ -70,8 +70,8 @@ public class ServiceDossierMedical extends BaseService implements IService<Dossi
                 if (rs.next()) {
                     Utilisateur joueur = new ServiceUtilisateur().get(rs.getInt("joueur_id"));
                     String allergies = rs.getString("allergies");
-                    String historiqueBlessures = rs.getString("historique_blessures");
-                    Date dernierCheckup = rs.getDate("dernier_checkup");
+                    String historiqueBlessures = rs.getString("historiqueblessures");
+                    Date dernierCheckup = rs.getDate("derniercheckup");
 
                     DossierMedical dossierMedical = new DossierMedical(joueur, allergies, historiqueBlessures, dernierCheckup);
                     dossierMedical.setId(id);
@@ -94,8 +94,8 @@ public class ServiceDossierMedical extends BaseService implements IService<Dossi
                 int id = rs.getInt("id");
                 Utilisateur joueur = new ServiceUtilisateur().get(rs.getInt("joueur_id"));
                 String allergies = rs.getString("allergies");
-                String historiqueBlessures = rs.getString("historique_blessures");
-                Date dernierCheckup = rs.getDate("dernier_checkup");
+                String historiqueBlessures = rs.getString("historiqueblessures");
+                Date dernierCheckup = rs.getDate("derniercheckup");
 
                 DossierMedical dossierMedical = new DossierMedical(joueur, allergies, historiqueBlessures, dernierCheckup);
                 dossierMedical.setId(id);

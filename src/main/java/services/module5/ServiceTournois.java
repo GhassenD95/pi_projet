@@ -16,7 +16,7 @@ import java.util.List;
 public class ServiceTournois extends BaseService implements IService<Tournois> {
     @Override
     public void add(Tournois tournois) throws SQLException {
-        String sql = "INSERT INTO tournois(nom, sport, date_debut, date_fin, adresse) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO tournois(nom, sport, datedebut, datefin, adresse) VALUES(?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, tournois.getNom());
             ps.setString(2, tournois.getSport().toString()); // Assuming 'sport' is an enum
@@ -33,7 +33,7 @@ public class ServiceTournois extends BaseService implements IService<Tournois> {
 
     @Override
     public void update(Tournois tournois) {
-        String sql = "UPDATE tournois SET nom = ?, sport = ?, date_debut = ?, date_fin = ?, adresse = ? WHERE id = ?";
+        String sql = "UPDATE tournois SET nom = ?, sport = ?, datedebut = ?, datefin = ?, adresse = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, tournois.getNom());
             ps.setString(2, tournois.getSport().toString()); // Assuming 'sport' is an enum
@@ -70,8 +70,8 @@ public class ServiceTournois extends BaseService implements IService<Tournois> {
                 if (rs.next()) {
                     String nom = rs.getString("nom");
                     Sport sport = Sport.valueOf(rs.getString("sport")); // Assuming 'sport' is an enum
-                    Date dateDebut = rs.getDate("date_debut");
-                    Date dateFin = rs.getDate("date_fin");
+                    Date dateDebut = rs.getDate("datedebut");
+                    Date dateFin = rs.getDate("datefin");
                     String adresse = rs.getString("adresse");
 
                     Tournois tournois = new Tournois(nom, sport, dateDebut, dateFin, adresse);
@@ -95,8 +95,8 @@ public class ServiceTournois extends BaseService implements IService<Tournois> {
                 int id = rs.getInt("id");
                 String nom = rs.getString("nom");
                 Sport sport = Sport.valueOf(rs.getString("sport")); // Assuming 'sport' is an enum
-                Date dateDebut = rs.getDate("date_debut");
-                Date dateFin = rs.getDate("date_fin");
+                Date dateDebut = rs.getDate("datedebut");
+                Date dateFin = rs.getDate("datefin");
                 String adresse = rs.getString("adresse");
 
                 Tournois tournois = new Tournois(nom, sport, dateDebut, dateFin, adresse);

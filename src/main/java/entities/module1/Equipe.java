@@ -57,4 +57,15 @@ public class Equipe {
     public void setSport(Sport sport) {
         this.sport = sport;
     }
+
+    @Override
+    public String toString() {
+        return "Equipe{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", division=" + division +
+                ", coach=" + coach +
+                ", sport=" + sport +
+                '}';
+    }
 }

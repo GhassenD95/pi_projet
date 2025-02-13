@@ -16,7 +16,7 @@ import java.util.List;
 public class ServiceInstallationSportive extends BaseService implements IService<InstallationSportive> {
     @Override
     public void add(InstallationSportive installationSportive) throws SQLException {
-        String sql = "INSERT INTO installationsportive(nom, typeInstallation, image_url, statusInstallation, adresse) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO installationsportive(nom, type, image_url, status, adresse) VALUES(?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, installationSportive.getNom());
             ps.setString(2, installationSportive.getTypeInstallation().name());
@@ -33,7 +33,7 @@ public class ServiceInstallationSportive extends BaseService implements IService
 
     @Override
     public void update(InstallationSportive installationSportive) {
-        String sql = "UPDATE installationsportive SET nom = ?, typeInstallation = ?, image_url = ?, statusInstallation = ?, adresse = ? WHERE id = ?";
+        String sql = "UPDATE installationsportive SET nom = ?, type = ?, image_url = ?, status = ?, adresse = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, installationSportive.getNom());
             ps.setString(2, installationSportive.getTypeInstallation().name());
@@ -70,9 +70,9 @@ public class ServiceInstallationSportive extends BaseService implements IService
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     String nom = rs.getString("nom");
-                    TypeInstallation typeInstallation = TypeInstallation.valueOf(rs.getString("typeInstallation"));
+                    TypeInstallation typeInstallation = TypeInstallation.valueOf(rs.getString("type"));
                     String imageUrl = rs.getString("image_url");
-                    StatusInstallation statusInstallation = StatusInstallation.valueOf(rs.getString("statusInstallation"));
+                    StatusInstallation statusInstallation = StatusInstallation.valueOf(rs.getString("status"));
                     String adresse = rs.getString("adresse");
 
                     InstallationSportive installationSportive = new InstallationSportive(nom, typeInstallation, imageUrl, statusInstallation, adresse);
@@ -95,9 +95,9 @@ public class ServiceInstallationSportive extends BaseService implements IService
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nom = rs.getString("nom");
-                TypeInstallation typeInstallation = TypeInstallation.valueOf(rs.getString("typeInstallation"));
+                TypeInstallation typeInstallation = TypeInstallation.valueOf(rs.getString("type"));
                 String imageUrl = rs.getString("image_url");
-                StatusInstallation statusInstallation = StatusInstallation.valueOf(rs.getString("statusInstallation"));
+                StatusInstallation statusInstallation = StatusInstallation.valueOf(rs.getString("status"));
                 String adresse = rs.getString("adresse");
 
                 InstallationSportive installationSportive = new InstallationSportive(nom, typeInstallation, imageUrl, statusInstallation, adresse);

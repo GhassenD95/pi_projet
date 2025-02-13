@@ -122,14 +122,16 @@ public class Utilisateur {
     @Override
     public String toString() {
         return "Utilisateur{" +
-                "role=" + role +
+                "prenom='" + prenom + '\'' +
+                ", nom='" + nom + '\'' +
+                ", role=" + role +
                 ", birthday=" + birthday +
                 ", tel='" + tel + '\'' +
                 ", adresse='" + adresse + '\'' +
                 ", status=" + status +
                 ", image_url='" + image_url + '\'' +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
+                ", email='" + email + '\'' +
+                ", mdp_hash='" + mdp_hash + '\'' +
                 '}';
     }
 }

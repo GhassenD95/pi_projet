@@ -53,7 +53,7 @@ public class ServiceUtilisateur extends BaseService implements IService<Utilisat
             ps.setString(8, utilisateur.getImage_url());
             ps.setString(9, utilisateur.getEmail());
             ps.setString(10, utilisateur.getMdp_hash());
-            ps.setInt(9, utilisateur.getId());
+            ps.setInt(11, utilisateur.getId());
 
             ps.executeUpdate();
             System.out.println("Utilisateur a ete mis a jour !");
@@ -123,7 +123,6 @@ public class ServiceUtilisateur extends BaseService implements IService<Utilisat
             String image_url = rs.getString("image_url");
             String email = rs.getString("email");
             String mdp_hash = rs.getString("mdp_hash");
-            int team_id = rs.getInt("team_id");
 
             Utilisateur utilisateur = new Utilisateur(prenom, nom, role, tel, birthday, adresse, status, image_url, email, mdp_hash );
             utilisateurs.add(utilisateur);
