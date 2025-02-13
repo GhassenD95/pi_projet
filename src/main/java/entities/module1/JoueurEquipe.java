@@ -2,12 +2,12 @@ package entities.module1;
 
 public class JoueurEquipe {
     private int id;
-    private int equipe_id;
-    private int joueur_id;
+    private Equipe equipe;
+    private Utilisateur joueur;
 
-    public JoueurEquipe(int equipe_id, int joueur_id) {
-        this.equipe_id = equipe_id;
-        this.joueur_id = joueur_id;
+    public JoueurEquipe(Equipe equipe, Utilisateur joueur) {
+        this.equipe = equipe;
+        this.joueur = joueur;
     }
 
     public int getId() {
@@ -18,19 +18,19 @@ public class JoueurEquipe {
         this.id = id;
     }
 
-    public int getEquipe_id() {
-        return equipe_id;
+    public Equipe getEquipe() {
+        return equipe;
     }
 
-    public void setEquipe_id(int equipe_id) {
-        this.equipe_id = equipe_id;
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
     }
 
-    public int getJoueur_id() {
-        return joueur_id;
+    public Utilisateur getJoueur() {
+        return joueur;
     }
 
-    public void setJoueur_id(int joueur_id) {
-        this.joueur_id = joueur_id;
+    public void setJoueur(Utilisateur joueur) {
+        this.joueur = joueur;
     }
 }

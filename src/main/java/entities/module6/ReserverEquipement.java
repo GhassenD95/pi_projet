@@ -1,21 +1,22 @@
 package entities.module6;
 
+import entities.module1.Utilisateur;
+
 import java.util.Date;
 
 public class ReserverEquipement {
     private int id;
-    private int equipementId;
-    private int utilisateurId;
+    private Equipement equipement;
+    private Utilisateur utilisateur;
     private Date debut;
     private Date fin;
 
-    public ReserverEquipement(int equipementId, int utilisateurId, Date debut, Date fin) {
-        this.equipementId = equipementId;
-        this.utilisateurId = utilisateurId;
+    public ReserverEquipement(Utilisateur utilisateur, Date debut, Date fin, Equipement equipement) {
+        this.utilisateur = utilisateur;
         this.debut = debut;
         this.fin = fin;
+        this.equipement = equipement;
     }
-
 
     public int getId() {
         return id;
@@ -25,20 +26,20 @@ public class ReserverEquipement {
         this.id = id;
     }
 
-    public int getEquipementId() {
-        return equipementId;
+    public Equipement getEquipement() {
+        return equipement;
     }
 
-    public void setEquipementId(int equipementId) {
-        this.equipementId = equipementId;
+    public void setEquipement(Equipement equipement) {
+        this.equipement = equipement;
     }
 
-    public int getUtilisateurId() {
-        return utilisateurId;
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 
-    public void setUtilisateurId(int utilisateurId) {
-        this.utilisateurId = utilisateurId;
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
     public Date getDebut() {

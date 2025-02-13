@@ -7,13 +7,14 @@ public class Equipe {
     private int id;
     private String nom;
     private Division division;
-    private int coach_id;
+    private Utilisateur coach;
     private Sport sport;
 
-    public Equipe(String nom, Division division, int coach_id, Sport sport) {
+    public Equipe(String nom, Utilisateur coach, Division division, Sport sport) {
+
         this.nom = nom;
+        this.coach = coach;
         this.division = division;
-        this.coach_id = coach_id;
         this.sport = sport;
     }
 
@@ -41,12 +42,12 @@ public class Equipe {
         this.division = division;
     }
 
-    public int getCoach_id() {
-        return coach_id;
+    public Utilisateur getCoach() {
+        return coach;
     }
 
-    public void setCoach_id(int coach_id) {
-        this.coach_id = coach_id;
+    public void setCoach(Utilisateur coach) {
+        this.coach = coach;
     }
 
     public Sport getSport() {
@@ -55,16 +56,5 @@ public class Equipe {
 
     public void setSport(Sport sport) {
         this.sport = sport;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Equipe{" +
-                "nom='" + nom + '\'' +
-                ", division=" + division +
-                ", coach_id=" + coach_id +
-                ", sport=" + sport +
-                '}';
     }
 }

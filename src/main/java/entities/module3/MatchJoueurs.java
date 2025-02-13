@@ -1,25 +1,18 @@
 package entities.module3;
 
+import entities.module1.Utilisateur;
+
 public class MatchJoueurs {
     private int id;
-    private int joueur_id;
-    private int match_id;
+    private Utilisateur joueur;
+    private MatchSportif match;
     private int minutesjoues;
 
 
-    public MatchJoueurs(int joueur_id, int match_id, int minutesjoues) {
-        this.joueur_id = joueur_id;
-        this.match_id = match_id;
+    public MatchJoueurs(Utilisateur joueur, MatchSportif match, int minutesjoues) {
+        this.joueur = joueur;
+        this.match = match;
         this.minutesjoues = minutesjoues;
-    }
-
-
-    public int getJoueur_id() {
-        return joueur_id;
-    }
-
-    public void setJoueur_id(int joueur_id) {
-        this.joueur_id = joueur_id;
     }
 
     public int getId() {
@@ -30,12 +23,20 @@ public class MatchJoueurs {
         this.id = id;
     }
 
-    public int getMatch_id() {
-        return match_id;
+    public Utilisateur getJoueur() {
+        return joueur;
     }
 
-    public void setMatch_id(int match_id) {
-        this.match_id = match_id;
+    public void setJoueur(Utilisateur joueur) {
+        this.joueur = joueur;
+    }
+
+    public MatchSportif getMatch() {
+        return match;
+    }
+
+    public void setMatch(MatchSportif match) {
+        this.match = match;
     }
 
     public int getMinutesjoues() {

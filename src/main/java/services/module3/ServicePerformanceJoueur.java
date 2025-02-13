@@ -1,9 +1,12 @@
 package services.module3;
 
+import entities.module1.Utilisateur;
+import entities.module3.MatchJoueurs;
 import entities.module3.PerformanceJoueur;
 import enums.Carte;
 import services.BaseService;
 import services.IService;
+import services.module1.ServiceUtilisateur;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,9 +18,9 @@ import java.util.List;
 public class ServicePerformanceJoueur extends BaseService implements IService<PerformanceJoueur> {
     @Override
     public void add(PerformanceJoueur performanceJoueur) throws SQLException {
-        String sql = "INSERT INTO performancejoueur(match_joueur_id, buts, assist, carte, score_coach) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO performancejoueur(joueur_id, buts, assist, carte, score_coach) VALUES(?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, performanceJoueur.getMatchJoueur_id());
+            ps.setInt(1, performanceJoueur.getJoueur().getId());
             ps.setInt(2, performanceJoueur.getButs());
             ps.setInt(3, performanceJoueur.getAssist());
             ps.setString(4, performanceJoueur.getCarte().name());
@@ -34,7 +37,7 @@ public class ServicePerformanceJoueur extends BaseService implements IService<Pe
     public void update(PerformanceJoueur performanceJoueur) {
         String sql = "UPDATE performancejoueur SET match_joueur_id = ?, buts = ?, assist = ?, carte = ?, score_coach = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, performanceJoueur.getMatchJoueur_id());
+            ps.setInt(1, performanceJoueur.getJoueur().getId());
             ps.setInt(2, performanceJoueur.getButs());
             ps.setInt(3, performanceJoueur.getAssist());
             ps.setString(4, performanceJoueur.getCarte().name());
@@ -68,13 +71,13 @@ public class ServicePerformanceJoueur extends BaseService implements IService<Pe
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    int match_joueur_id = rs.getInt("match_joueur_id");
+                    Utilisateur joueur = new ServiceUtilisateur().get(rs.getInt("joueur_id"));
                     int buts = rs.getInt("buts");
                     int assist = rs.getInt("assist");
                     Carte carte = Carte.valueOf(rs.getString("carte"));
                     int score_coach = rs.getInt("score_coach");
 
-                    PerformanceJoueur performanceJoueur = new PerformanceJoueur(buts, match_joueur_id, assist, carte, score_coach);
+                    PerformanceJoueur performanceJoueur = new PerformanceJoueur(joueur, buts, assist, carte, score_coach);
                     performanceJoueur.setId(id);
                     return performanceJoueur;
                 }
@@ -93,13 +96,13 @@ public class ServicePerformanceJoueur extends BaseService implements IService<Pe
         try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
-                int match_joueur_id = rs.getInt("match_joueur_id");
+                Utilisateur joueur = new ServiceUtilisateur().get(rs.getInt("joueur_id"));
                 int buts = rs.getInt("buts");
                 int assist = rs.getInt("assist");
                 Carte carte = Carte.valueOf(rs.getString("carte"));
                 int score_coach = rs.getInt("score_coach");
 
-                PerformanceJoueur performanceJoueur = new PerformanceJoueur(buts, match_joueur_id, assist, carte, score_coach);
+                PerformanceJoueur performanceJoueur = new PerformanceJoueur(joueur, buts, assist, carte, score_coach);
                 performanceJoueur.setId(id);
                 performanceJoueurs.add(performanceJoueur);
             }

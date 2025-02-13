@@ -1,8 +1,11 @@
 package services.module6;
 
+import entities.module1.Utilisateur;
+import entities.module6.Equipement;
 import entities.module6.ReserverEquipement;
 import services.BaseService;
 import services.IService;
+import services.module1.ServiceUtilisateur;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,17 +15,16 @@ import java.util.List;
 public class ServiceReserverEquipement extends BaseService implements IService<ReserverEquipement> {
     @Override
     public void add(ReserverEquipement reserverEquipement) throws SQLException {
-        String sql = "INSERT INTO reserverequipement (equipement_id, utilisateur_id, debut, fin) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, reserverEquipement.getEquipementId());
-            ps.setInt(2, reserverEquipement.getUtilisateurId());
-
-            // Assuming debut and fin are java.sql.Time
-            ps.setTime(3, new java.sql.Time(reserverEquipement.getDebut().getTime()));
-            ps.setTime(4, new java.sql.Time(reserverEquipement.getFin().getTime()));
+        String sql = "INSERT INTO reserver_equipement (utilisateur_id, equipement_id, debut, fin) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, reserverEquipement.getUtilisateur().getId());
+            ps.setInt(2, reserverEquipement.getEquipement().getId());
+            ps.setDate(3, new java.sql.Date(reserverEquipement.getDebut().getTime()));
+            ps.setDate(4, new java.sql.Date(reserverEquipement.getFin().getTime()));
 
             ps.executeUpdate();
-            System.out.println("Reservation has been added!");
+            System.out.println("Reservation added successfully!");
+
         } catch (SQLException e) {
             System.out.println("Error adding reservation: " + e.getMessage());
         }
@@ -33,10 +35,10 @@ public class ServiceReserverEquipement extends BaseService implements IService<R
     public void update(ReserverEquipement reserverEquipement) {
         String sql = "UPDATE reserverequipement SET equipement_id = ?, utilisateur_id = ?, debut = ?, fin = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, reserverEquipement.getEquipementId());
-            ps.setInt(2, reserverEquipement.getUtilisateurId());
-            ps.setTime(3, new java.sql.Time(reserverEquipement.getDebut().getTime()));  // Convert Date to Time
-            ps.setTime(4, new java.sql.Time(reserverEquipement.getFin().getTime()));     // Convert Date to Time
+            ps.setInt(1, reserverEquipement.getEquipement().getId());
+            ps.setInt(2, reserverEquipement.getUtilisateur().getId());
+            ps.setDate(3, new java.sql.Date(reserverEquipement.getDebut().getTime()));
+            ps.setDate(4, new java.sql.Date(reserverEquipement.getFin().getTime()));
             ps.setInt(5, reserverEquipement.getId());
 
             int rowsAffected = ps.executeUpdate();
@@ -75,13 +77,13 @@ public class ServiceReserverEquipement extends BaseService implements IService<R
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    int equipementId = rs.getInt("equipement_id");
-                    int utilisateurId = rs.getInt("utilisateur_id");
-                    Time debut = rs.getTime("debut");
+                    Equipement equipement = new ServiceEquipement().get(rs.getInt("equipement_id"));
+                    Utilisateur utilisateur = new ServiceUtilisateur().get(rs.getInt("utilisateur_id"));
+                    Date debut = rs.getDate("debut");
                     Time fin = rs.getTime("fin");
 
-                    ReserverEquipement reserverEquipement = new ReserverEquipement(equipementId, utilisateurId, debut, fin);
-                    reserverEquipement.setId(id);  // Set the id
+                    ReserverEquipement reserverEquipement = new ReserverEquipement(utilisateur, debut, fin, equipement);
+                    reserverEquipement.setId(id);
                     return reserverEquipement;
                 }
             }
@@ -100,12 +102,12 @@ public class ServiceReserverEquipement extends BaseService implements IService<R
         try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
-                int equipementId = rs.getInt("equipement_id");
-                int utilisateurId = rs.getInt("utilisateur_id");
-                Time debut = rs.getTime("debut");
+                Equipement equipement = new ServiceEquipement().get(rs.getInt("equipement_id"));
+                Utilisateur utilisateur = new ServiceUtilisateur().get(rs.getInt("utilisateur_id"));
+                Date debut = rs.getDate("debut");
                 Time fin = rs.getTime("fin");
 
-                ReserverEquipement reserverEquipement = new ReserverEquipement(equipementId, utilisateurId, debut, fin);
+                ReserverEquipement reserverEquipement = new ReserverEquipement(utilisateur, debut, fin, equipement);
                 reserverEquipement.setId(id);
                 reservations.add(reserverEquipement);
             }

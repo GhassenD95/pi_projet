@@ -1,18 +1,20 @@
 package entities.module3;
 
+import entities.module1.Utilisateur;
 import enums.Carte;
 
 public class PerformanceJoueur {
     private int id;
-    private int matchJoueur_id;
+    private Utilisateur joueur;
     private int buts;
     private int assist;
     private Carte carte;
     private int score_coach;
 
-    public PerformanceJoueur(int buts, int matchJoueur_id, int assist, Carte carte, int score_coach) {
+
+    public PerformanceJoueur(Utilisateur joueur, int buts, int assist, Carte carte, int score_coach) {
+        this.joueur = joueur;
         this.buts = buts;
-        this.matchJoueur_id = matchJoueur_id;
         this.assist = assist;
         this.carte = carte;
         this.score_coach = score_coach;
@@ -27,12 +29,20 @@ public class PerformanceJoueur {
         this.id = id;
     }
 
-    public int getMatchJoueur_id() {
-        return matchJoueur_id;
+    public Utilisateur getJoueur() {
+        return joueur;
     }
 
-    public void setMatchJoueur_id(int matchJoueur_id) {
-        this.matchJoueur_id = matchJoueur_id;
+    public void setJoueur(Utilisateur joueur) {
+        this.joueur = joueur;
+    }
+
+    public int getAssist() {
+        return assist;
+    }
+
+    public void setAssist(int assist) {
+        this.assist = assist;
     }
 
     public int getButs() {
@@ -49,14 +59,6 @@ public class PerformanceJoueur {
 
     public void setCarte(Carte carte) {
         this.carte = carte;
-    }
-
-    public int getAssist() {
-        return assist;
-    }
-
-    public void setAssist(int assist) {
-        this.assist = assist;
     }
 
     public int getScore_coach() {

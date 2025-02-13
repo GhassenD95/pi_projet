@@ -1,17 +1,19 @@
 package entities.module4;
 
+import entities.module1.Utilisateur;
+
 import java.util.Date;
 
 public class DossierMedical {
     private int id;
-    private int joueur_id;
+    private Utilisateur joueur;
     private String allergies;
     private String historiqueBlessures;
     private Date dernierCheckup;
 
 
-    public DossierMedical(int joueur_id, String allergies, String historiqueBlessures, Date dernierCheckup) {
-        this.joueur_id = joueur_id;
+    public DossierMedical(Utilisateur joueur, String allergies, String historiqueBlessures, Date dernierCheckup) {
+        this.joueur = joueur;
         this.allergies = allergies;
         this.historiqueBlessures = historiqueBlessures;
         this.dernierCheckup = dernierCheckup;
@@ -25,14 +27,6 @@ public class DossierMedical {
         this.id = id;
     }
 
-    public int getJoueur_id() {
-        return joueur_id;
-    }
-
-    public void setJoueur_id(int joueur_id) {
-        this.joueur_id = joueur_id;
-    }
-
     public String getAllergies() {
         return allergies;
     }
@@ -41,12 +35,12 @@ public class DossierMedical {
         this.allergies = allergies;
     }
 
-    public String getHistoriqueBlessures() {
-        return historiqueBlessures;
+    public Utilisateur getJoueur() {
+        return joueur;
     }
 
-    public void setHistoriqueBlessures(String historiqueBlessures) {
-        this.historiqueBlessures = historiqueBlessures;
+    public void setJoueur(Utilisateur joueur) {
+        this.joueur = joueur;
     }
 
     public Date getDernierCheckup() {
@@ -55,5 +49,13 @@ public class DossierMedical {
 
     public void setDernierCheckup(Date dernierCheckup) {
         this.dernierCheckup = dernierCheckup;
+    }
+
+    public String getHistoriqueBlessures() {
+        return historiqueBlessures;
+    }
+
+    public void setHistoriqueBlessures(String historiqueBlessures) {
+        this.historiqueBlessures = historiqueBlessures;
     }
 }

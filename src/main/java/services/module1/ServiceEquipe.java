@@ -1,6 +1,7 @@
 package services.module1;
 
 import entities.module1.Equipe;
+import entities.module1.Utilisateur;
 import enums.Division;
 import enums.Sport;
 import services.BaseService;
@@ -21,7 +22,7 @@ public class ServiceEquipe extends BaseService implements IService<Equipe> {
 
             ps.setString(1, equipe.getNom());
             ps.setString(2, equipe.getDivision().getDivisionName());
-            ps.setInt(3, equipe.getCoach_id());
+            ps.setInt(3, equipe.getCoach().getId());
             ps.setString(4, equipe.getSport().name());
             ps.executeUpdate();
 
@@ -38,7 +39,7 @@ public class ServiceEquipe extends BaseService implements IService<Equipe> {
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, equipe.getNom());
             ps.setString(2, equipe.getDivision().name());
-            ps.setInt(3, equipe.getCoach_id());
+            ps.setInt(3, equipe.getCoach().getId());
             ps.setString(4, equipe.getSport().name());
             ps.setInt(5, equipe.getId());
             ps.executeUpdate();
@@ -70,9 +71,9 @@ public class ServiceEquipe extends BaseService implements IService<Equipe> {
                 if (rs.next()) {
                     String nom = rs.getString("nom");
                     Division division = Division.valueOf(rs.getString("division"));
-                    int coach_id = rs.getInt("coach_id");
+                    Utilisateur coach = new ServiceUtilisateur().get(rs.getInt("coach_id"));
                     Sport sport = Sport.valueOf(rs.getString("sport"));
-                    Equipe equipe = new Equipe(nom, division, coach_id, sport);
+                    Equipe equipe = new Equipe(nom, coach, division, sport);
                     equipe.setId(id);
                     return equipe;
                 }
@@ -91,11 +92,11 @@ public class ServiceEquipe extends BaseService implements IService<Equipe> {
             while (rs.next()) {
                 String nom = rs.getString("nom");
                 Division division = Division.valueOf(rs.getString("division"));
-                int coach_id = rs.getInt("coach_id");
+                Utilisateur coach = new ServiceUtilisateur().get(rs.getInt("coach_id"));
                 Sport sport = Sport.valueOf(rs.getString("sport"));
                 int id = rs.getInt("id");
 
-                Equipe equipe = new Equipe(nom, division, coach_id, sport);
+                Equipe equipe = new Equipe(nom,  coach,division, sport);
                 equipe.setId(id);
                 equipes.add(equipe);
             }

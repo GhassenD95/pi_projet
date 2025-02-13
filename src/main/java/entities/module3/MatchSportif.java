@@ -1,5 +1,7 @@
 package entities.module3;
 
+import entities.module1.Equipe;
+import entities.module5.Tournois;
 import enums.Sport;
 import enums.TypeMatch;
 
@@ -9,26 +11,27 @@ import java.util.Date;
 public class MatchSportif {
     private int id;
     private Sport sport;
-    private int equipe_id;
+    private Equipe equipe;
     private String equipe_opposant;
     private Date date;
     private Time debut;
     private Time fin;
     private String adresse;
     private TypeMatch match;
-    private int tournois_id;
+    private Tournois tournois;
 
-    public MatchSportif(Sport sport, Date date, int equipe_id, String equipe_opposant, Time debut, Time fin, String adresse, TypeMatch match, int tournois_id) {
+    public MatchSportif(Sport sport, Equipe equipe, String equipe_opposant, Time debut, Date date, Time fin, String adresse, Tournois tournois, TypeMatch match) {
         this.sport = sport;
-        this.date = date;
-        this.equipe_id = equipe_id;
+        this.equipe = equipe;
         this.equipe_opposant = equipe_opposant;
         this.debut = debut;
+        this.date = date;
         this.fin = fin;
         this.adresse = adresse;
+        this.tournois = tournois;
         this.match = match;
-        this.tournois_id = tournois_id;
     }
+
 
     public Sport getSport() {
         return sport;
@@ -36,6 +39,22 @@ public class MatchSportif {
 
     public void setSport(Sport sport) {
         this.sport = sport;
+    }
+
+    public Equipe getEquipe() {
+        return equipe;
+    }
+
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
+    }
+
+    public String getEquipe_opposant() {
+        return equipe_opposant;
+    }
+
+    public void setEquipe_opposant(String equipe_opposant) {
+        this.equipe_opposant = equipe_opposant;
     }
 
     public int getId() {
@@ -46,28 +65,12 @@ public class MatchSportif {
         this.id = id;
     }
 
-    public int getEquipe_id() {
-        return equipe_id;
-    }
-
-    public void setEquipe_id(int equipe_id) {
-        this.equipe_id = equipe_id;
-    }
-
     public Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public String getEquipe_opposant() {
-        return equipe_opposant;
-    }
-
-    public void setEquipe_opposant(String equipe_opposant) {
-        this.equipe_opposant = equipe_opposant;
     }
 
     public Time getDebut() {
@@ -102,11 +105,11 @@ public class MatchSportif {
         this.match = match;
     }
 
-    public int getTournois_id() {
-        return tournois_id;
+    public Tournois getTournois() {
+        return tournois;
     }
 
-    public void setTournois_id(int tournois_id) {
-        this.tournois_id = tournois_id;
+    public void setTournois(Tournois tournois) {
+        this.tournois = tournois;
     }
 }

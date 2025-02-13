@@ -1,22 +1,23 @@
 package entities.module4;
 
+import entities.module1.Utilisateur;
 import enums.TypeBlessure;
 
 import java.util.Date;
 
 public class Blessure {
     private int id;
-    private int joueur_id;
+    private Utilisateur joueur;
     private TypeBlessure type;
     private String description;
     private Date date;
     private Date date_retour;
 
-    public Blessure(int id, TypeBlessure type, String description, Date date, Date date_retour) {
-        this.id = id;
+    public Blessure(TypeBlessure type, Utilisateur joueur, Date date, String description, Date date_retour) {
         this.type = type;
-        this.description = description;
+        this.joueur = joueur;
         this.date = date;
+        this.description = description;
         this.date_retour = date_retour;
     }
 
@@ -28,12 +29,12 @@ public class Blessure {
         this.id = id;
     }
 
-    public int getJoueur_id() {
-        return joueur_id;
+    public Utilisateur getJoueur() {
+        return joueur;
     }
 
-    public void setJoueur_id(int joueur_id) {
-        this.joueur_id = joueur_id;
+    public void setJoueur(Utilisateur joueur) {
+        this.joueur = joueur;
     }
 
     public TypeBlessure getType() {
@@ -44,20 +45,20 @@ public class Blessure {
         this.type = type;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Date getDate_retour() {

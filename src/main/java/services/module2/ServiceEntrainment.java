@@ -1,9 +1,14 @@
 package services.module2;
 
+import entities.module1.Equipe;
+import entities.module1.Utilisateur;
 import entities.module2.Entrainment;
+import entities.module2.InstallationSportive;
 import enums.TypeEntrainment;
 import services.BaseService;
 import services.IService;
+import services.module1.ServiceEquipe;
+import services.module1.ServiceUtilisateur;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,9 +20,9 @@ public class ServiceEntrainment extends BaseService implements IService<Entrainm
     public void add(Entrainment entrainment) throws SQLException {
         String sql = "INSERT INTO entrainment(equipe_id, coach_id, installationSportive_id, date, debut, fin, typeEntrainment) VALUES(?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, entrainment.getEquipe_id());
-            ps.setInt(2, entrainment.getCoach_id());
-            ps.setInt(3, entrainment.getInstallationSportive_id());
+            ps.setInt(1, entrainment.getEquipe().getId());
+            ps.setInt(2, entrainment.getCoach().getId());
+            ps.setInt(3, entrainment.getInstallationSportive().getId());
             ps.setDate(4, new java.sql.Date(entrainment.getDate().getTime()));
             ps.setTime(5, entrainment.getDebut());
             ps.setTime(6, entrainment.getFin());
@@ -33,9 +38,9 @@ public class ServiceEntrainment extends BaseService implements IService<Entrainm
     public void update(Entrainment entrainment) {
         String sql = "UPDATE entrainment SET equipe_id = ?, coach_id = ?, installationSportive_id = ?, date = ?, debut = ?, fin = ?, typeEntrainment = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, entrainment.getEquipe_id());
-            ps.setInt(2, entrainment.getCoach_id());
-            ps.setInt(3, entrainment.getInstallationSportive_id());
+            ps.setInt(1, entrainment.getEquipe().getId());
+            ps.setInt(2, entrainment.getCoach().getId());
+            ps.setInt(3, entrainment.getInstallationSportive().getId());
             ps.setDate(4, new java.sql.Date(entrainment.getDate().getTime()));
             ps.setTime(5, entrainment.getDebut());
             ps.setTime(6, entrainment.getFin());
@@ -69,15 +74,15 @@ public class ServiceEntrainment extends BaseService implements IService<Entrainm
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    int equipeId = rs.getInt("equipe_id");
-                    int coachId = rs.getInt("coach_id");
-                    int installationSportiveId = rs.getInt("installationSportive_id");
+                    Equipe equipe = new ServiceEquipe().get(rs.getInt("equipe_id"));
+                    Utilisateur coach = new ServiceUtilisateur().get(rs.getInt("coach_id"));
+                    InstallationSportive installationSportive = new ServiceInstallationSportive().get(rs.getInt("installationSportive_id")) ;
                     Date date = rs.getDate("date");
                     Time debut = rs.getTime("debut");
                     Time fin = rs.getTime("fin");
                     TypeEntrainment typeEntrainment = TypeEntrainment.valueOf(rs.getString("typeEntrainment"));
 
-                    Entrainment entrainment = new Entrainment(equipeId, coachId, fin, typeEntrainment, date, debut, installationSportiveId);
+                    Entrainment entrainment = new Entrainment(equipe, coach, installationSportive, date, debut, fin, typeEntrainment);
                     entrainment.setId(id);
                     return entrainment;
                 }
@@ -96,15 +101,15 @@ public class ServiceEntrainment extends BaseService implements IService<Entrainm
         try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
-                int equipeId = rs.getInt("equipe_id");
-                int coachId = rs.getInt("coach_id");
-                int installationSportiveId = rs.getInt("installationSportive_id");
+                Equipe equipe = new ServiceEquipe().get(rs.getInt("equipe_id"));
+                Utilisateur coach = new ServiceUtilisateur().get(rs.getInt("coach_id"));
+                InstallationSportive installationSportive = new ServiceInstallationSportive().get(rs.getInt("installationSportive_id")) ;
                 Date date = rs.getDate("date");
                 Time debut = rs.getTime("debut");
                 Time fin = rs.getTime("fin");
                 TypeEntrainment typeEntrainment = TypeEntrainment.valueOf(rs.getString("typeEntrainment"));
 
-                Entrainment entrainment = new Entrainment(equipeId, coachId, fin, typeEntrainment, date, debut, installationSportiveId);
+                Entrainment entrainment = new Entrainment(equipe, coach, installationSportive, date, debut, fin, typeEntrainment);
                 entrainment.setId(id);
                 entrainments.add(entrainment);
             }

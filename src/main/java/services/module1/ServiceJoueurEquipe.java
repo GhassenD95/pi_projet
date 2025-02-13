@@ -1,6 +1,8 @@
 package services.module1;
 
+import entities.module1.Equipe;
 import entities.module1.JoueurEquipe;
+import entities.module1.Utilisateur;
 import services.BaseService;
 import services.IService;
 
@@ -17,8 +19,8 @@ public class ServiceJoueurEquipe  extends BaseService implements IService<Joueur
     public void add(JoueurEquipe joueurEquipe) throws SQLException {
         String sql = "INSERT INTO utilisateurequipe(equipe_id, joueur_id) VALUES(?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, joueurEquipe.getEquipe_id());
-            ps.setInt(2, joueurEquipe.getJoueur_id());
+            ps.setInt(1, joueurEquipe.getEquipe().getId());
+            ps.setInt(2, joueurEquipe.getJoueur().getId());
             ps.executeUpdate();
             System.out.println("UtilisateurEquipe has been added!");
         } catch (SQLException e) {
@@ -30,8 +32,8 @@ public class ServiceJoueurEquipe  extends BaseService implements IService<Joueur
     public void update(JoueurEquipe joueurEquipe) {
         String sql = "UPDATE utilisateurequipe SET equipe_id = ?, joueur_id = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, joueurEquipe.getEquipe_id());
-            ps.setInt(2, joueurEquipe.getJoueur_id());
+            ps.setInt(1, joueurEquipe.getEquipe().getId());
+            ps.setInt(2, joueurEquipe.getJoueur().getId());
             ps.setInt(3, joueurEquipe.getId());
             ps.executeUpdate();
             System.out.println("JoueurEquipe has been updated!");
@@ -60,9 +62,9 @@ public class ServiceJoueurEquipe  extends BaseService implements IService<Joueur
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    int equipe_id = rs.getInt("equipe_id");
-                    int joueur_id = rs.getInt("joueur_id");
-                    JoueurEquipe joueurEquipe = new JoueurEquipe(equipe_id, joueur_id);
+                    Equipe equipe = new ServiceEquipe().get(rs.getInt("equipe_id"));
+                    Utilisateur joueur = new ServiceUtilisateur().get(rs.getInt("joueur_id"));
+                    JoueurEquipe joueurEquipe = new JoueurEquipe(equipe, joueur);
                     joueurEquipe.setId(id);
                     return joueurEquipe;
                 }
@@ -80,11 +82,11 @@ public class ServiceJoueurEquipe  extends BaseService implements IService<Joueur
         String sql = "SELECT * FROM utilisateurequipe";
         try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                int equipe_id = rs.getInt("equipe_id");
-                int joueur_id = rs.getInt("joueur_id");
+                Equipe equipe = new ServiceEquipe().get(rs.getInt("equipe_id"));
+                Utilisateur joueur = new ServiceUtilisateur().get(rs.getInt("joueur_id"));
                 int id = rs.getInt("id");
 
-                JoueurEquipe joueurEquipe = new JoueurEquipe(equipe_id, joueur_id);
+                JoueurEquipe joueurEquipe = new JoueurEquipe(equipe, joueur);
                 joueurEquipe.setId(id);
                 joueurEquipes.add(joueurEquipe);
             }

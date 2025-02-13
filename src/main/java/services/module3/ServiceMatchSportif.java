@@ -1,10 +1,14 @@
 package services.module3;
 
+import entities.module1.Equipe;
 import entities.module3.MatchSportif;
+import entities.module5.Tournois;
 import enums.Sport;
 import enums.TypeMatch;
 import services.BaseService;
 import services.IService;
+import services.module1.ServiceEquipe;
+import services.module5.ServiceTournois;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,14 +21,14 @@ public class ServiceMatchSportif extends BaseService implements IService<MatchSp
         String sql = "INSERT INTO matchsportif(sport, equipe_id, equipe_opposant, date, debut, fin, adresse, match_type, tournois_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, matchSportif.getSport().name());
-            ps.setInt(2, matchSportif.getEquipe_id());
+            ps.setInt(2, matchSportif.getEquipe().getId());
             ps.setString(3, matchSportif.getEquipe_opposant());
             ps.setDate(4, new java.sql.Date(matchSportif.getDate().getTime()));
             ps.setTime(5, matchSportif.getDebut());
             ps.setTime(6, matchSportif.getFin());
             ps.setString(7, matchSportif.getAdresse());
             ps.setString(8, matchSportif.getMatch().name());
-            ps.setInt(9, matchSportif.getTournois_id());
+            ps.setInt(9, matchSportif.getTournois().getId());
             ps.executeUpdate();
             System.out.println("MatchSportif has been added!");
         } catch (SQLException e) {
@@ -38,14 +42,14 @@ public class ServiceMatchSportif extends BaseService implements IService<MatchSp
         String sql = "UPDATE matchsportif SET sport = ?, equipe_id = ?, equipe_opposant = ?, date = ?, debut = ?, fin = ?, adresse = ?, match_type = ?, tournois_id = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, matchSportif.getSport().name());
-            ps.setInt(2, matchSportif.getEquipe_id());
+            ps.setInt(2, matchSportif.getEquipe().getId());
             ps.setString(3, matchSportif.getEquipe_opposant());
             ps.setDate(4, new java.sql.Date(matchSportif.getDate().getTime()));
             ps.setTime(5, matchSportif.getDebut());
             ps.setTime(6, matchSportif.getFin());
             ps.setString(7, matchSportif.getAdresse());
             ps.setString(8, matchSportif.getMatch().name());
-            ps.setInt(9, matchSportif.getTournois_id());
+            ps.setInt(9, matchSportif.getTournois().getId());
             ps.setInt(10, matchSportif.getId());
             ps.executeUpdate();
             System.out.println("MatchSportif has been updated!");
@@ -75,16 +79,16 @@ public class ServiceMatchSportif extends BaseService implements IService<MatchSp
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Sport sport = Sport.valueOf(rs.getString("sport"));
-                    int equipe_id = rs.getInt("equipe_id");
+                    Equipe equipe = new ServiceEquipe().get(rs.getInt("equipe_id"));
                     String equipe_opposant = rs.getString("equipe_opposant");
                     Date date = rs.getDate("date");
                     Time debut = rs.getTime("debut");
                     Time fin = rs.getTime("fin");
                     String adresse = rs.getString("adresse");
                     TypeMatch match = TypeMatch.valueOf(rs.getString("match_type"));
-                    int tournois_id = rs.getInt("tournois_id");
+                    Tournois tournois = new ServiceTournois().get(rs.getInt("tournois_id"));
 
-                    MatchSportif matchSportif = new MatchSportif(sport, date, equipe_id, equipe_opposant, debut, fin, adresse, match, tournois_id);
+                    MatchSportif matchSportif = new MatchSportif(sport, equipe, equipe_opposant, debut, date, fin, adresse, tournois, match);
                     matchSportif.setId(id);
                     return matchSportif;
                 }
@@ -106,16 +110,17 @@ public class ServiceMatchSportif extends BaseService implements IService<MatchSp
             while (rs.next()) {
                 int id = rs.getInt("id");
                 Sport sport = Sport.valueOf(rs.getString("sport"));
-                int equipe_id = rs.getInt("equipe_id");
+                Equipe equipe = new ServiceEquipe().get(rs.getInt("equipe_id"));
                 String equipe_opposant = rs.getString("equipe_opposant");
                 Date date = rs.getDate("date");
                 Time debut = rs.getTime("debut");
                 Time fin = rs.getTime("fin");
                 String adresse = rs.getString("adresse");
                 TypeMatch match = TypeMatch.valueOf(rs.getString("match_type"));
-                int tournois_id = rs.getInt("tournois_id");
+                Tournois tournois = new ServiceTournois().get(rs.getInt("tournois_id"));
 
-                MatchSportif matchSportif = new MatchSportif(sport, date, equipe_id, equipe_opposant, debut, fin, adresse, match, tournois_id);
+                MatchSportif matchSportif = new MatchSportif(sport, equipe, equipe_opposant, debut, date, fin, adresse, tournois, match);
+
                 matchSportif.setId(id);
                 matchSportifs.add(matchSportif);
             }

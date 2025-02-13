@@ -1,9 +1,11 @@
 package services.module4;
 
+import entities.module1.Utilisateur;
 import entities.module4.Blessure;
 import enums.TypeBlessure;
 import services.BaseService;
 import services.IService;
+import services.module1.ServiceUtilisateur;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +20,7 @@ public class ServiceBlessure extends BaseService implements IService<Blessure> {
     public void add(Blessure blessure) throws SQLException {
         String sql = "INSERT INTO blessure(joueur_id, type, description, date, date_retour) VALUES(?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, blessure.getJoueur_id());
+            ps.setInt(1, blessure.getJoueur().getId());
             ps.setString(2, blessure.getType().toString());
             ps.setString(3, blessure.getDescription());
             ps.setDate(4, new java.sql.Date(blessure.getDate().getTime()));
@@ -35,7 +37,7 @@ public class ServiceBlessure extends BaseService implements IService<Blessure> {
     public void update(Blessure blessure) {
         String sql = "UPDATE blessure SET joueur_id = ?, type = ?, description = ?, date = ?, date_retour = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, blessure.getJoueur_id());
+            ps.setInt(1, blessure.getJoueur().getId());
             ps.setString(2, blessure.getType().toString());
             ps.setString(3, blessure.getDescription());
             ps.setDate(4, new java.sql.Date(blessure.getDate().getTime()));
@@ -69,14 +71,14 @@ public class ServiceBlessure extends BaseService implements IService<Blessure> {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    int joueur_id = rs.getInt("joueur_id");
+                    Utilisateur joueur = new ServiceUtilisateur().get(rs.getInt("joueur_id"));
                     TypeBlessure type = TypeBlessure.valueOf(rs.getString("type"));
                     String description = rs.getString("description");
                     Date date = rs.getDate("date");
                     Date date_retour = rs.getDate("date_retour");
 
-                    Blessure blessure = new Blessure(id, type, description, date, date_retour);
-                    blessure.setJoueur_id(joueur_id);
+                    Blessure blessure = new Blessure(type, joueur, date, description, date_retour);
+                    blessure.setId(id);
                     return blessure;
                 }
             }
@@ -94,14 +96,14 @@ public class ServiceBlessure extends BaseService implements IService<Blessure> {
         try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
-                int joueur_id = rs.getInt("joueur_id");
+                Utilisateur joueur = new ServiceUtilisateur().get(rs.getInt("joueur_id"));
                 TypeBlessure type = TypeBlessure.valueOf(rs.getString("type"));
                 String description = rs.getString("description");
                 Date date = rs.getDate("date");
                 Date date_retour = rs.getDate("date_retour");
 
-                Blessure blessure = new Blessure(id, type, description, date, date_retour);
-                blessure.setJoueur_id(joueur_id);
+                Blessure blessure = new Blessure(type, joueur, date, description, date_retour);
+                blessure.setId(id);
                 blessuresList.add(blessure);
             }
         }

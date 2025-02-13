@@ -1,19 +1,21 @@
 package entities.module5;
 
+import entities.module1.Equipe;
+
 public class PerformanceEquipe {
     private int id;
-    private int equipeId;
-    private int tournoisId;
+    private Equipe equipe;
+    private Tournois tournois;
     private int victoires;
     private int pertes;
     private int rang;
 
-    public PerformanceEquipe(int equipeId, int tournoisId, int victoires, int pertes, int rang) {
-        this.equipeId = equipeId;
-        this.tournoisId = tournoisId;
+    public PerformanceEquipe(Equipe equipe, int victoires, int pertes, int rang, Tournois tournois) {
+        this.equipe = equipe;
         this.victoires = victoires;
         this.pertes = pertes;
         this.rang = rang;
+        this.tournois = tournois;
     }
 
     public int getId() {
@@ -24,20 +26,20 @@ public class PerformanceEquipe {
         this.id = id;
     }
 
-    public int getEquipeId() {
-        return equipeId;
+    public Equipe getEquipe() {
+        return equipe;
     }
 
-    public void setEquipeId(int equipeId) {
-        this.equipeId = equipeId;
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
     }
 
-    public int getTournoisId() {
-        return tournoisId;
+    public Tournois getTournois() {
+        return tournois;
     }
 
-    public void setTournoisId(int tournoisId) {
-        this.tournoisId = tournoisId;
+    public void setTournois(Tournois tournois) {
+        this.tournois = tournois;
     }
 
     public int getVictoires() {

@@ -1,8 +1,11 @@
 package services.module3;
 
+import entities.module1.Utilisateur;
 import entities.module3.MatchJoueurs;
+import entities.module3.MatchSportif;
 import services.BaseService;
 import services.IService;
+import services.module1.ServiceUtilisateur;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +19,8 @@ public class ServiceMatchJoueurs extends BaseService implements IService<MatchJo
     public void add(MatchJoueurs matchJoueurs) throws SQLException {
         String sql = "INSERT INTO matchjoueurs(joueur_id, match_id, minutesjoues) VALUES(?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, matchJoueurs.getJoueur_id());
-            ps.setInt(2, matchJoueurs.getMatch_id());
+            ps.setInt(1, matchJoueurs.getJoueur().getId());
+            ps.setInt(2, matchJoueurs.getMatch().getId());
             ps.setInt(3, matchJoueurs.getMinutesjoues());
             ps.executeUpdate();
             System.out.println("MatchJoueurs has been added!");
@@ -31,8 +34,8 @@ public class ServiceMatchJoueurs extends BaseService implements IService<MatchJo
     public void update(MatchJoueurs matchJoueurs) {
         String sql = "UPDATE matchjoueurs SET joueur_id = ?, match_id = ?, minutesjoues = ? WHERE id = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, matchJoueurs.getJoueur_id());
-            ps.setInt(2, matchJoueurs.getMatch_id());
+            ps.setInt(1, matchJoueurs.getJoueur().getId());
+            ps.setInt(2, matchJoueurs.getMatch().getId());
             ps.setInt(3, matchJoueurs.getMinutesjoues());
             ps.setInt(4, matchJoueurs.getId());
             ps.executeUpdate();
@@ -63,11 +66,11 @@ public class ServiceMatchJoueurs extends BaseService implements IService<MatchJo
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    int joueur_id = rs.getInt("joueur_id");
-                    int match_id = rs.getInt("match_id");
+                    Utilisateur joueur = new ServiceUtilisateur().get(rs.getInt("joueur_id"));
+                    MatchSportif match = new ServiceMatchSportif().get(rs.getInt("match_id"));
                     int minutesjoues = rs.getInt("minutesjoues");
 
-                    MatchJoueurs matchJoueurs = new MatchJoueurs(joueur_id, match_id, minutesjoues);
+                    MatchJoueurs matchJoueurs = new MatchJoueurs(joueur, match, minutesjoues);
                     matchJoueurs.setId(id);
                     return matchJoueurs;
                 }
@@ -86,11 +89,11 @@ public class ServiceMatchJoueurs extends BaseService implements IService<MatchJo
         try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
-                int joueur_id = rs.getInt("joueur_id");
-                int match_id = rs.getInt("match_id");
+                Utilisateur joueur = new ServiceUtilisateur().get(rs.getInt("joueur_id"));
+                MatchSportif match = new ServiceMatchSportif().get(rs.getInt("match_id"));
                 int minutesjoues = rs.getInt("minutesjoues");
 
-                MatchJoueurs matchJoueurs = new MatchJoueurs(joueur_id, match_id, minutesjoues);
+                MatchJoueurs matchJoueurs = new MatchJoueurs(joueur, match, minutesjoues);
                 matchJoueurs.setId(id);
                 matchJoueursList.add(matchJoueurs);
             }
