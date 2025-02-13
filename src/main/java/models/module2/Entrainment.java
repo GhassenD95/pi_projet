@@ -1,7 +1,7 @@
-package entities.module2;
+package models.module2;
 
-import entities.module1.Equipe;
-import entities.module1.Utilisateur;
+import models.module1.Equipe;
+import models.module1.Utilisateur;
 import enums.TypeEntrainment;
 
 import java.sql.Time;

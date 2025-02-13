@@ -1,8 +1,8 @@
 package services.module1;
 
-import entities.module1.Equipe;
-import entities.module1.JoueurEquipe;
-import entities.module1.Utilisateur;
+import models.module1.Equipe;
+import models.module1.JoueurEquipe;
+import models.module1.Utilisateur;
 import services.BaseService;
 import services.IService;
 

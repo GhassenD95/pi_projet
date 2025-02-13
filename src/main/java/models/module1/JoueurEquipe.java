@@ -1,4 +1,4 @@
-package entities.module1;
+package models.module1;
 
 public class JoueurEquipe {
     private int id;

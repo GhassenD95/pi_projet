@@ -1,8 +1,8 @@
 package services.module5;
 
-import entities.module1.Equipe;
-import entities.module5.PerformanceEquipe;
-import entities.module5.Tournois;
+import models.module1.Equipe;
+import models.module5.PerformanceEquipe;
+import models.module5.Tournois;
 import services.BaseService;
 import services.IService;
 import services.module1.ServiceEquipe;

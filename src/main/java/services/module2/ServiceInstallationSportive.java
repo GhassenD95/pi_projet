@@ -1,6 +1,6 @@
 package services.module2;
 
-import entities.module2.InstallationSportive;
+import models.module2.InstallationSportive;
 import enums.StatusInstallation;
 import enums.TypeInstallation;
 import services.BaseService;

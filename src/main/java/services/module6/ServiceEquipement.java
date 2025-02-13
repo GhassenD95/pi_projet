@@ -1,6 +1,6 @@
 package services.module6;
 
-import entities.module6.Equipement;
+import models.module6.Equipement;
 import enums.Sport;
 import enums.StatusEquipement;
 import services.BaseService;

@@ -1,6 +1,6 @@
-package entities.module4;
+package models.module4;
 
-import entities.module1.Utilisateur;
+import models.module1.Utilisateur;
 
 import java.util.Date;
 

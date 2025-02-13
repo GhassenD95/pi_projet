@@ -1,8 +1,8 @@
 package services.module6;
 
-import entities.module1.Utilisateur;
-import entities.module6.Equipement;
-import entities.module6.ReserverEquipement;
+import models.module1.Utilisateur;
+import models.module6.Equipement;
+import models.module6.ReserverEquipement;
 import services.BaseService;
 import services.IService;
 import services.module1.ServiceUtilisateur;

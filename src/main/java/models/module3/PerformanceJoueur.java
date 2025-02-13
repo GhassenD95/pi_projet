@@ -1,6 +1,6 @@
-package entities.module3;
+package models.module3;
 
-import entities.module1.Utilisateur;
+import models.module1.Utilisateur;
 import enums.Carte;
 
 public class PerformanceJoueur {

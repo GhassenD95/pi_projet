@@ -1,6 +1,6 @@
-package entities.module5;
+package models.module5;
 
-import entities.module1.Equipe;
+import models.module1.Equipe;
 
 public class PerformanceEquipe {
     private int id;

@@ -1,8 +1,8 @@
 package services.module3;
 
-import entities.module1.Utilisateur;
-import entities.module3.MatchJoueurs;
-import entities.module3.MatchSportif;
+import models.module1.Utilisateur;
+import models.module3.MatchJoueurs;
+import models.module3.MatchSportif;
 import services.BaseService;
 import services.IService;
 import services.module1.ServiceUtilisateur;

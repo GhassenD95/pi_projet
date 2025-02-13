@@ -1,4 +1,4 @@
-package entities.module6;
+package models.module6;
 
 import enums.Sport;
 import enums.StatusEquipement;

@@ -1,6 +1,6 @@
 package services.module1;
 
-import entities.module1.Utilisateur;
+import models.module1.Utilisateur;
 import enums.Role;
 import enums.Status;
 import services.BaseService;

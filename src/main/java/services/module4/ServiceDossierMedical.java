@@ -1,7 +1,7 @@
 package services.module4;
 
-import entities.module1.Utilisateur;
-import entities.module4.DossierMedical;
+import models.module1.Utilisateur;
+import models.module4.DossierMedical;
 import services.BaseService;
 import services.IService;
 import services.module1.ServiceUtilisateur;

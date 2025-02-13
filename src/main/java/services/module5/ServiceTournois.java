@@ -1,6 +1,6 @@
 package services.module5;
 
-import entities.module5.Tournois;
+import models.module5.Tournois;
 import enums.Sport;
 import services.BaseService;
 import services.IService;

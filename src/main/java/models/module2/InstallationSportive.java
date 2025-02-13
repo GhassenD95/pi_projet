@@ -1,4 +1,4 @@
-package entities.module2;
+package models.module2;
 
 import enums.StatusInstallation;
 import enums.TypeInstallation;

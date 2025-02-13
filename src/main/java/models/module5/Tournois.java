@@ -1,4 +1,4 @@
-package entities.module5;
+package models.module5;
 
 import enums.Sport;
 

@@ -1,7 +1,7 @@
 package services.module4;
 
-import entities.module1.Utilisateur;
-import entities.module4.Blessure;
+import models.module1.Utilisateur;
+import models.module4.Blessure;
 import enums.TypeBlessure;
 import services.BaseService;
 import services.IService;

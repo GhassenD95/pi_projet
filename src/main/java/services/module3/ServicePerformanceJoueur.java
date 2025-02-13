@@ -1,8 +1,7 @@
 package services.module3;
 
-import entities.module1.Utilisateur;
-import entities.module3.MatchJoueurs;
-import entities.module3.PerformanceJoueur;
+import models.module1.Utilisateur;
+import models.module3.PerformanceJoueur;
 import enums.Carte;
 import services.BaseService;
 import services.IService;

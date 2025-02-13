@@ -1,7 +1,7 @@
-package entities.module3;
+package models.module3;
 
-import entities.module1.Equipe;
-import entities.module5.Tournois;
+import models.module1.Equipe;
+import models.module5.Tournois;
 import enums.Sport;
 import enums.TypeMatch;
 

@@ -1,8 +1,8 @@
 package services.module3;
 
-import entities.module1.Equipe;
-import entities.module3.MatchSportif;
-import entities.module5.Tournois;
+import models.module1.Equipe;
+import models.module3.MatchSportif;
+import models.module5.Tournois;
 import enums.Sport;
 import enums.TypeMatch;
 import services.BaseService;

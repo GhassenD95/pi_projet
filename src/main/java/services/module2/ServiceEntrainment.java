@@ -1,9 +1,9 @@
 package services.module2;
 
-import entities.module1.Equipe;
-import entities.module1.Utilisateur;
-import entities.module2.Entrainment;
-import entities.module2.InstallationSportive;
+import models.module1.Equipe;
+import models.module1.Utilisateur;
+import models.module2.Entrainment;
+import models.module2.InstallationSportive;
 import enums.TypeEntrainment;
 import services.BaseService;
 import services.IService;
